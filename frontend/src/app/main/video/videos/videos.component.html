@@ -1,0 +1,80 @@
+<section id="videos" class="videos" fxlayout="row">
+  <header class="top-bg mat-accent-bg" fxlayout="column" fxlayout="column">
+    <h2>
+      <mat-icon class="mr-22">
+        play_circle_outline
+      </mat-icon>
+      <span class="mr-20 text">
+        Ahgora Challenge
+      </span>
+    </h2>
+  </header>
+
+  <form fxLayout="column" fxLayoutAlign="center" id="videoForm" [formGroup]="videoForm">
+    <div fxLayout="row" fxLayoutAlign="start center">
+      <mat-form-field fxFlex="50" style="margin-right: 10px">
+        <input formControlName="title" placeholder="Search videos" type="text" matInput>
+        <mat-error>Video title is required.</mat-error>
+      </mat-form-field>
+      <mat-form-field fxFlex="50">
+        <input matInput formControlName="hours" placeholder="How much time you can expend daily during a week." type="text"/>
+        <mat-hint>For example, [90, 20, 30, 30] in minutes.</mat-hint>
+        <mat-error>Daily free hours is required.</mat-error>
+      </mat-form-field>
+      <button mat-fab aria-label="search videos" (click)="getVideos()">
+        <mat-icon>search</mat-icon>
+      </button>
+    </div>
+  </form>
+
+  <div fxLayoutGap="20px" class="video-list-cards" fxLayout="row wrap" fxLayoutAlign="center" *ngIf="!videos">
+    <div fxLayoutAlign="center center" fxFlex class="mat-white-bg mat-elevation-z2">
+      <div class="video-card" fxLayout="column" fxLayoutAlign="center center">
+        <div class="h3">{{totalVideos}}
+        </div>
+        <div class="h4">
+          Total videos
+        </div>
+      </div>
+    </div>
+    <div fxLayoutAlign="center center" fxFlex class="mat-white-bg mat-elevation-z2">
+      <div class="video-card" fxLayout="column" fxLayoutAlign="center center">
+        <div class="h3">{{totalTime}}
+        </div>
+        <div class="h4">
+          Total time in minutes
+        </div>
+      </div>
+    </div>
+    <div fxLayoutAlign="center center" fxFlex class="mat-white-bg mat-elevation-z2">
+      <div class="video-card-words" fxLayout="column" fxLayoutAlign="center center">
+        <div class="h3" *ngFor=" let word of data.meta.mostUsedWordsTitle">{{word[0]}}
+        </div>
+        <div class="h4">
+          5 most used words in titles
+        </div>
+      </div>
+    </div>
+    <div fxLayoutAlign="center center" fxFlex class="mat-white-bg mat-elevation-z2">
+      <div class="video-card-words" fxLayout="column" fxLayoutAlign="center center">
+        <div class="h3" *ngFor=" let word of data.meta.mostUsedWordsTitle">{{word[0]}}
+        </div>
+        <div class="h4">
+          5 most used words in descriptions
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container" *ngIf="videos$ | async as data; else loading">
+    <video-cards [data]="data"></video-cards>
+  </div>
+
+  <div *ngIf="!videos" class="video-not-found-wrap">
+    <img src="../../../../assets/undraw_youtube_tutorial_2gn3.svg" alt="no videos found" id="img-not-found">
+    <h2>
+      Oops. No video found.
+    </h2>
+</div>
+
+</section>
