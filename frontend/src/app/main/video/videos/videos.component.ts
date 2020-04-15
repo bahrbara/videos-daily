@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 import { VideoService } from '../../../services/video.service';
 
@@ -10,21 +11,22 @@ import { VideoService } from '../../../services/video.service';
 })
 export class VideoComponent implements OnInit {
   displayedColumns: string[] = ['id', 'name', 'email', 'role'];
-  data: any;
+  videos: any;
   videoForm: FormGroup;
   totalVideos = 0;
   totalTime = 0;
 
   resultsLength = 0;
-  isLoadingResults = true;
+  isLoadingResults = false;
 
   constructor(
     private videoService: VideoService,
-    private formBuilder: FormBuilder
-  ) { }
+    private formBuilder: FormBuilder,
+    private sanitizer: DomSanitizer
+  ) {}
 
   ngOnInit(): void {
-     this.data = {
+    this.videos = {
       "meta": {
         "mostUsedWordsTitle": [
           ["covid19", 275],
@@ -341,16 +343,21 @@ export class VideoComponent implements OnInit {
   }
 
   calculateTotal(): any {
-    this.data.playlist.map((list) => this.totalVideos = this.totalVideos + list.items.length);
-    this.data.playlist.map((list) => this.totalTime = this.totalTime + list.minutes);
+    this.videos.playlist.map((list) => this.totalVideos = this.totalVideos + list.items.length);
+    this.videos.playlist.map((list) => this.totalTime = this.totalTime + list.minutes);
   }
 
   getVideos(): any {
+    console.log(this.videoForm.get('hours').value)
     this.isLoadingResults = true;
     this.videoService.getVideosBySearch(this.videoForm.get('title').value, this.videoForm.get('hours').value)
       .subscribe((videosList) => {
-        this.data = videosList;
+        this.videos = videosList;
       })
+  }
+
+  getSafeVideoURL(videoLink): any {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${videoLink}`)
   }
 }
 

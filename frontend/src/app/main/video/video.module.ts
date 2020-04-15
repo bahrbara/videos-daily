@@ -22,6 +22,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 
 import { VideoComponent } from './videos/videos.component';
+import { MatCardModule } from '@angular/material/card';
 
 
 @NgModule({
@@ -40,6 +41,7 @@ import { VideoComponent } from './videos/videos.component';
     MatSortModule,
     MatTableModule,
     MatTooltipModule,
+    MatCardModule,
     MatProgressBarModule,
     BrowserAnimationsModule,
     NoopAnimationsModule,
