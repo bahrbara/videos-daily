@@ -7,12 +7,16 @@ exports.extractVideoIds = (items) => {
 exports.mergeSnippetsAndDetails = (snippets, details) => {
   console.info("Merging videos snippets and details");
   snippets.forEach((snippet) => {
+    snippet["contentDetails"] = {
+      duration: 99999,
+    };
     const video = details.find((detail) => detail.id == snippet.id.videoId);
-
-    video.contentDetails.duration = convertVideoDuration(
-      video.contentDetails.duration
-    );
-    snippet["contentDetails"] = video.contentDetails;
+    if (video) {
+      video.contentDetails.duration = convertVideoDuration(
+        video.contentDetails.duration
+      );
+      snippet.contentDetails = video.contentDetails;
+    }
   });
   return snippets;
 };

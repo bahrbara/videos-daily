@@ -8,11 +8,12 @@ import { environment } from '../../environments/environment';
     providedIn: 'root'
 })
 export class VideoService {
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient) { }
 
-  
+
     getVideosBySearch(title: string, time: string): Observable<any> {
-        const href = `${environment.api.url}/search/movies?term=${title}&dailyMin=${time}`;
+        const href = `${environment.api.url}/playlists?term=${title}&dailyMin=${time}`;
+        console.log('------', href);
         return this.http.get<any>(href);
-      }
+    }
 }

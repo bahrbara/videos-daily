@@ -126,6 +126,12 @@
       min-width: 225px;
       padding: 12px;
       margin-bottom: 20px;
+      display: flex;
+      flex-wrap: wrap;
+
+      .cards-child {
+        flex: 1 0 21%;
+      }
 
       iframe {
         align-self: center;
