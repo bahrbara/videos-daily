@@ -37,8 +37,8 @@ At **frontend** folder we have the frontend in Angular 9.
 ### Build and Run
 
 #### Backend 
-First time: npm install
-Run: npm start
+* First time: npm install
+* Run: npm start
 
 #### Frontend
 ng serve
